@@ -32,13 +32,11 @@ void Indice::guardarInformacion(std::string rutaDeArchivo) {
 
     std::string linea;
     char delimitador = ',';
-    int contador = 0;
     // Leemos la primer línea para descartarla, pues es el encabezado
     std::getline(archivo, linea);
 
     // Leemos todas las líneas
     while(getline(archivo, linea)) {
-    	contador++;
     	std::stringstream stream(linea);
     	std::string x, y;
     	std::string calle, altPlano, direccion, comuna, barrio;
@@ -48,23 +46,22 @@ void Indice::guardarInformacion(std::string rutaDeArchivo) {
     	std::getline(stream, calle, delimitador);
     	std::getline(stream, altPlano, delimitador);
     	std::getline(stream, direccion, delimitador);
-    	try {
-    		std::getline(stream, x, delimitador);
-    		coordX = std::stod(x);
-    		std::getline(stream, y, delimitador);
-    		coordY = std::stod(y);
-    	} catch (...) {
-    		std::cout << "Hubo un error de conversion";
-    	}
-
+    	std::getline(stream, x, delimitador);
+    	std::getline(stream, y, delimitador);
     	std::getline(stream, comuna, delimitador);
     	std::getline(stream, barrio, delimitador);
 
     	// Crear coordenada
+    	try {
+    		coordX = std::stod(x);
+    		coordY = std::stod(y);
+    	} catch (...) {
+    		std::cout << "Hubo error en la conversion" << std::endl;
+    	}
     	Coordenadas* coordenadas = new Coordenadas(coordX, coordY);
 
     	// Buscar o crear el barrio
-    	Barrio* barrioExistente;
+    	Barrio* barrioExistente = NULL;
     	this->barrios->iniciarCursor();
     	while(this->barrios->avanzarCursor()) {
     		Barrio* b = this->barrios->obtenerCursor();
@@ -82,19 +79,19 @@ void Indice::guardarInformacion(std::string rutaDeArchivo) {
     	Parada* parada = new Parada(direccion, coordenadas);
 
     	// Leer las líneas de colectivo
-    	for (int i = 7; i < 18; i += 2) {
+    	for (int i = 0; i < 6; i++) {
     		std::string lineaCampo;
+    		std::string sentido;
     		std::getline(stream, lineaCampo, delimitador);
+    		std::getline(stream, sentido, delimitador);
     		if (!lineaCampo.empty()) {
     			LineaDeColectivos* linea = new LineaDeColectivos(lineaCampo);
     			parada->agregarLineaDeColectivos(linea);
-
     		}
     	}
-
     	barrioExistente->agregarParada(parada);
+
     }
-    std::cout << contador << std::endl;
     archivo.close();
 }
 
