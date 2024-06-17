@@ -1,9 +1,10 @@
 /*
  * Nodo.h
  *
- *  Created on: 24 abr. 2024
- *      Author: edgar
+ *  Created on: 22/04/2024
+ *      Author: algo2
  */
+
 #ifndef NODO_H_
 #define NODO_H_
 #include <iostream>

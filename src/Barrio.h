@@ -12,12 +12,40 @@ class Barrio {
 
 private:
 	std::string nombre;
-	Lista<Parada>* paradas;
+	Lista<Parada*>* paradas;
 
 public:
-	Barrio();
+	/*
+	 * pre: -
+	 * post: crea un barrio con un nombre pasado por parametro.
+	 */
+	Barrio(std::string nombre);
+
 	virtual ~Barrio();
-	int getCantParadas();
+
+	/*
+	 * pre: -
+	 * post: obtiene el nombre del barrio.
+	 */
+	std::string getNombre();
+
+	/*
+	 * pre: -
+	 * post: obtiene la lista de paradas.
+	 */
+	Lista<Parada*>* getParadas();
+
+	/*
+	 * pre: -
+	 * post: guarda una parada pasada por parametro en la lista de paradas.
+	 */
+	void agregarParada(Parada* paradas);
+
+	/*
+	 * pre: -
+	 * post: ordena las paradas por distancia de acuerdo a una ubicacion (coordenadas) pasada por parametro y devuelve una nueva lista.
+	 */
+	Lista<Parada*>* ordenarParadas(Coordenadas* ubicacion);
 
 };
 

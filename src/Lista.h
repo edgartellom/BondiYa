@@ -1,9 +1,10 @@
 /*
  * Lista.h
  *
- *  Created on: 24 abr. 2024
- *      Author: edgar
+ *  Created on: 22/04/2024
+ *      Author: algo2
  */
+
 #ifndef LISTA_H_
 #define LISTA_H_
 
@@ -208,7 +209,7 @@ template<class T> bool Lista<T>::avanzarCursor() {
     if (this->cursor == NULL) {
         this->cursor = this->primero;
     } else {
-        this->cursor = this->cursor->obtenerSiguiente();
+        this->cursor = this->cursor->getSiguiente();
     }
 
     /* pudo avanzar si el cursor ahora apunta a un nodo */
@@ -218,7 +219,7 @@ template<class T> bool Lista<T>::avanzarCursor() {
 template<class T> T Lista<T>::obtenerCursor() {
     T elemento;
     if (this->cursor != NULL) {
-        elemento = this->cursor->obtenerDato();
+        elemento = this->cursor->getDato();
     }
     return elemento;
 }
