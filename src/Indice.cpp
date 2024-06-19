@@ -147,7 +147,7 @@ void Indice::getParadaMasCercana(Coordenadas* ubicacion) {
 };
 
 void Indice::listarParadas(LineaDeColectivos* lineaDeColectivos) {
-	this->barrios->iniciarCursor();
+    this->barrios->iniciarCursor();
 	while (this->barrios->avanzarCursor()) {
 		Barrio* barrio = this->barrios->obtenerCursor();
 		Lista<Parada*>* paradas = barrio->getParadas();
@@ -155,15 +155,42 @@ void Indice::listarParadas(LineaDeColectivos* lineaDeColectivos) {
 		while (paradas->avanzarCursor()) {
 			Parada* parada = paradas->obtenerCursor();
 			if (parada->tieneLinea(lineaDeColectivos)) {
-				std::cout << "Parada: " << parada->getDireccion() << std::endl;
-			}
+                std::cout << "Parada: " << parada->getDireccion() << std::endl;
+            }
 		}
-	}
+    }
 };
+
 
 void Indice::listarCantParadasPorLineaDeColectivo() {
+    for (int i = 1; i < 200; ++i) {
+        unsigned int cantParadas = 0; // Reiniciar el contador para cada línea
+        std::string lineaStr = std::to_string(i);
+        LineaDeColectivos* linea = new LineaDeColectivos(lineaStr);
 
-};
+        this->barrios->iniciarCursor();
+        while (this->barrios->avanzarCursor()) {
+            Barrio* barrio = this->barrios->obtenerCursor();
+            Lista<Parada*>* paradas = barrio->getParadas();
+            paradas->iniciarCursor();
+            while (paradas->avanzarCursor()) {
+                Parada* parada = paradas->obtenerCursor();
+                if (parada->tieneLinea(linea)) {
+                    cantParadas++;
+                }
+            }
+        }
+
+        // Solo imprimir si hay paradas encontradas para la línea de colectivo
+        if (cantParadas > 0) {
+            std::cout << "linea : " << linea->getNumero() << " paradas : " << cantParadas << std::endl;
+        }
+
+        delete linea;
+    }
+}
+
+
 
 void Indice::getParadasOrdenadas(Barrio* barrio, LineaDeColectivos* lineaDeColectivos, Coordenadas* ubicacionActual) {
 

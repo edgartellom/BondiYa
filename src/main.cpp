@@ -72,7 +72,7 @@ int main() {
 		}
 		case 4: {
 			std::cout << std::endl;
-			indice->listarCantParadasPorLineaDeColectivo();
+            indice->listarCantParadasPorLineaDeColectivo();
 			std::cout << std::endl;
 			break;
 		}

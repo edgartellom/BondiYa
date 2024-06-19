@@ -1,0 +1,3 @@
+/home/ayelen/Escritorio/AlgYEstruc/BondiYa/cmake-build-debug/CMakeFiles/BondiYa.dir
+/home/ayelen/Escritorio/AlgYEstruc/BondiYa/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/ayelen/Escritorio/AlgYEstruc/BondiYa/cmake-build-debug/CMakeFiles/rebuild_cache.dir
