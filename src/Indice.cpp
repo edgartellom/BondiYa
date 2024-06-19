@@ -23,6 +23,25 @@ Indice::~Indice() {
 	delete this->barrios;
 }
 
+// Función para leer un campo del CSV teniendo en cuenta las comillas dobles
+std::string leerCampo(std::stringstream& stream, char delimitador) {
+    std::string campo;
+    char c;
+    bool enComillas = false;
+
+    while (stream.get(c)) {
+        if (c == '"') {
+            enComillas = !enComillas;
+        } else if (c == delimitador && !enComillas) {
+            break;
+        } else {
+            campo += c;
+        }
+    }
+
+    return campo;
+}
+
 void Indice::guardarInformacion(std::string rutaDeArchivo) {
     std::ifstream archivo;
     archivo.open(rutaDeArchivo.c_str());
@@ -38,26 +57,26 @@ void Indice::guardarInformacion(std::string rutaDeArchivo) {
     // Leemos todas las líneas
     while(getline(archivo, linea)) {
     	std::stringstream stream(linea);
-    	std::string x, y;
-    	std::string calle, altPlano, direccion, comuna, barrio;
-    	double coordX, coordY;
+    	std::string calle, altPlano, direccion, x, y, comuna, barrio;
+    	double coordX = 0, coordY = 0;
 
     	// Leer cada campo del CSV
-    	std::getline(stream, calle, delimitador);
-    	std::getline(stream, altPlano, delimitador);
-    	std::getline(stream, direccion, delimitador);
-    	std::getline(stream, x, delimitador);
-    	std::getline(stream, y, delimitador);
-    	std::getline(stream, comuna, delimitador);
-    	std::getline(stream, barrio, delimitador);
+    	calle = leerCampo(stream, delimitador);
+    	altPlano = leerCampo(stream, delimitador);
+    	direccion = leerCampo(stream, delimitador);
+    	x = leerCampo(stream, delimitador);
+    	y = leerCampo(stream, delimitador);
 
-    	// Crear coordenada
     	try {
     		coordX = std::stod(x);
     		coordY = std::stod(y);
     	} catch (...) {
-    		std::cout << "Hubo error en la conversion" << std::endl;
+    		std::cout << "Hubo un error de conversión" << std::endl;
     	}
+
+    	comuna = leerCampo(stream, delimitador);
+    	barrio = leerCampo(stream, delimitador);
+
     	Coordenadas* coordenadas = new Coordenadas(coordX, coordY);
 
     	// Buscar o crear el barrio
@@ -80,17 +99,14 @@ void Indice::guardarInformacion(std::string rutaDeArchivo) {
 
     	// Leer las líneas de colectivo
     	for (int i = 0; i < 6; i++) {
-    		std::string lineaCampo;
-    		std::string sentido;
-    		std::getline(stream, lineaCampo, delimitador);
-    		std::getline(stream, sentido, delimitador);
+    		std::string lineaCampo = leerCampo(stream, delimitador);
+    		std::string sentido = leerCampo(stream, delimitador);
     		if (!lineaCampo.empty()) {
     			LineaDeColectivos* linea = new LineaDeColectivos(lineaCampo);
     			parada->agregarLineaDeColectivos(linea);
     		}
     	}
     	barrioExistente->agregarParada(parada);
-
     }
     archivo.close();
 }
@@ -124,7 +140,7 @@ void Indice::getParadaMasCercana(Coordenadas* ubicacion) {
 
 	if (paradaMasCercana) {
 		std::cout << "La parada más cercana es: " << paradaMasCercana->getDireccion()
-				<< " en " << menorDistancia << " unidades." << std::endl;
+				<< " en " << menorDistancia << " unidades de distancia." << std::endl;
 	} else {
 		std::cout << "No se encontraron paradas cercanas." << std::endl;
 	}
