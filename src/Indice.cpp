@@ -165,7 +165,7 @@ void Indice::listarCantParadasPorLineaDeColectivo() {
 
 };
 
-void Indice::getParadasOrdenadas(std::string nombreBarrio, std::string linea, double coords[2]) {
+void Indice::imprimirParadasOrdenadas(std::string nombreBarrio, std::string linea, double coords[2]) {
 
     Barrio * barrioOrdenar=getBarrioPorNombre(nombreBarrio);
     Lista<Parada*>* paradasCoincidencia=barrioOrdenar->getParadasPorLinea(linea);
@@ -181,7 +181,7 @@ void Indice::getParadasOrdenadas(std::string nombreBarrio, std::string linea, do
         std::cout<<paradasCoincidencia->obtenerCursor()->getDireccion()<<std::endl<<paradasCoincidencia->obtenerCursor()->getCoordenadas()->obtenerDistancia(coords)<<std::endl;
     }
 
-
+    delete paradasCoincidencia;
 
 
 

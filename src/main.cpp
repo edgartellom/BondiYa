@@ -94,7 +94,7 @@ int main() {
 			std::cin >> coords[1];
             //REVISAR: Funcion no soporta input no numerico en ingreso de coordenadas. Programa loopea indefinidamente.
 
-			indice->getParadasOrdenadas(barrio, lineaDeColectivo, coords);
+			indice->imprimirParadasOrdenadas(barrio, lineaDeColectivo, coords);
 			std::cout << std::endl;
 			//delete nuevoBarrio;
 			//delete lineaNueva;
