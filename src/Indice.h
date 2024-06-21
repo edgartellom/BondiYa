@@ -46,11 +46,21 @@ public:
 	 */
 	void listarCantParadasPorLineaDeColectivo();
 
-	/*
-	 * pre: -
-	 * post: obtiene las paradas de un barrio de una linea de colectivo en orden de acuerdo a la distancia de una ubicacion pasados por parametro.
-	 */
-	void getParadasOrdenadas(Barrio* barrio, LineaDeColectivos* lineaDeColectivos, Coordenadas* ubicacionActual);
+    //Recibe el nombre de barrio y numero de linea como string, y las coordenadas como tupla de doubles.
+    //Funciona como hub para imprimir y retornar una lista con las paradas de cierto barrio y cierta linea
+    //ordenadas en distancia con respecto a una posicion ingresada.
+	void getParadasOrdenadas(std::string nombreBarrio, std::string nombreLinea, double coords[2]);
+
+
+    //Se le ingresa el nombre de un barrio e itera sobre la lista de barrios.
+    //Devuelve el objeto barrio que se corresponde con el nombre de barrio ingresado.
+	Barrio* getBarrioPorNombre(std::string nombreBarrio);
 };
+
+
+//Funcion auxiliar. Recibe una lista de paradas y coordenadas en array de doubles.
+//Devuelve la misma lista de paradas pero ordenada en base a distancia con las coordenadas ingresadas.
+Lista<Parada*>*ordenarParadasPorDistancia(Lista<Parada*>* paradas, double coords[2]);
+
 
 #endif /* INDICE_H_ */

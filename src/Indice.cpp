@@ -165,6 +165,78 @@ void Indice::listarCantParadasPorLineaDeColectivo() {
 
 };
 
-void Indice::getParadasOrdenadas(Barrio* barrio, LineaDeColectivos* lineaDeColectivos, Coordenadas* ubicacionActual) {
+void Indice::getParadasOrdenadas(std::string nombreBarrio, std::string linea, double coords[2]) {
+
+    Barrio * barrioOrdenar=getBarrioPorNombre(nombreBarrio);
+    Lista<Parada*>* paradasCoincidencia=barrioOrdenar->getParadasPorLinea(linea);
+    paradasCoincidencia->iniciarCursor();
+
+
+    paradasCoincidencia=ordenarParadasPorDistancia(paradasCoincidencia,coords);
+
+    paradasCoincidencia->iniciarCursor();
+
+
+    while(paradasCoincidencia->avanzarCursor()){
+        std::cout<<paradasCoincidencia->obtenerCursor()->getDireccion()<<std::endl<<paradasCoincidencia->obtenerCursor()->getCoordenadas()->obtenerDistancia(coords)<<std::endl;
+    }
+
+
+
+
+
 
 };
+
+Lista<Parada*>* ordenarParadasPorDistancia(Lista<Parada*>* paradas,double coords[2]){
+
+    int tamanio=paradas->getTamanio();
+    Parada* paradaTemp;
+
+    for (int i=2;i<=tamanio;i+=1){
+
+        paradaTemp=paradas->obtener(i);
+        int j=i-1;
+
+        while(j>=1&&paradas->obtener(j)->getCoordenadas()->obtenerDistancia(coords)>paradaTemp->getCoordenadas()->obtenerDistancia(coords)){
+
+            paradas->cambiar(paradas->obtener(j),j+1);
+            j=j-1;
+        }
+        paradas->cambiar(paradaTemp,j+1);
+    }
+
+
+    return paradas;
+}
+
+
+
+
+
+
+
+
+Barrio* Indice::getBarrioPorNombre(std::string nombreBarrio){
+
+    try{
+
+        bool siguiente=true;
+        this->barrios->iniciarCursor();
+        Barrio * barrioActual;
+        while(this->barrios->avanzarCursor()){
+
+                barrioActual=this->barrios->obtenerCursor();
+                if (nombreBarrio==barrioActual->getNombre()){
+                    return barrioActual;
+        }
+    }
+
+throw 125;
+    }
+    catch(int){
+    std::cout<<"Barrio no encontrado"<<std::endl;
+    return nullptr;
+    }
+};
+//potencialmente cambiar el sistema catch para que se siga ejecutando el menu luego de no encontrar barrio

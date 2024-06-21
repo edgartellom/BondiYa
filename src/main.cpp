@@ -14,6 +14,7 @@
 using namespace std;
 
 
+
 int main() {
 	bool activo = true;
 	int opcion;
@@ -35,10 +36,12 @@ int main() {
 		std::cout << "[6] Salir." << std::endl;
 		std::cout << "Elija una opción [1-6]: ";
 		std::cin >> opcion;
+		std::cin.ignore();
 		std::string barrio;
 		std::string lineaDeColectivo;
 		double coordenadaX;
 		double coordenadaY;
+		double coords[2];
 		switch (opcion)
 		{
 
@@ -49,7 +52,7 @@ int main() {
 			break;
 		}
 		case 2: {
-			std::cout << std::endl;
+            std::cout << std::endl;
 			std::cout << "Ingrese una coordenada X: ";
 			std::cin >> coordenadaX;
 			std::cout << "Ingrese una coordenada Y: ";
@@ -59,6 +62,7 @@ int main() {
 			std::cout << std::endl;
 			delete coordenadas;
 			break;
+
 		}
 		case 3: {
 			std::cout << std::endl;
@@ -77,23 +81,24 @@ int main() {
 			break;
 		}
 		case 5: {
+
 			std::cout << std::endl;
-			std::cout << "Ingrese el barrio: ";
-			std::cin >> barrio;
+			std::cout << "Ingrese el barrio: "<<std::endl;
+			std::getline(std::cin,barrio);
 			std::cout << "Ingrese una linea de colectivo: ";
 			std::cin >> lineaDeColectivo;
 			std::cout << "Ingrese una coordenada X: ";
-			std::cin >> coordenadaX;
+			std::cin >> coords[0];
 			std::cout << "Ingrese una coordenada Y: ";
-			std::cin >> coordenadaY;
-			Barrio* nuevoBarrio = new Barrio(barrio);
-			LineaDeColectivos * lineaNueva = new LineaDeColectivos(lineaDeColectivo);
-			Coordenadas* ubicacionActual = new Coordenadas(coordenadaX, coordenadaY);
-			indice->getParadasOrdenadas(nuevoBarrio, lineaNueva, ubicacionActual);
+			std::cin.ignore();
+			std::cin >> coords[1];
+            //REVISAR: Funcion no soporta input no numerico en ingreso de coordenadas. Programa loopea indefinidamente.
+
+			indice->getParadasOrdenadas(barrio, lineaDeColectivo, coords);
 			std::cout << std::endl;
-			delete nuevoBarrio;
-			delete lineaNueva;
-			delete ubicacionActual;
+			//delete nuevoBarrio;
+			//delete lineaNueva;
+			//delete ubicacionActual;
 			break;
 		}
 		case 6: {

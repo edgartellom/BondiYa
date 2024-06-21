@@ -34,8 +34,28 @@ Lista<Parada*>* Barrio::ordenarParadas(Coordenadas* ubicacion) {
 		Parada* parada = this->paradas->obtenerCursor();
 		double distancia = parada->getCoordenadas()->obtenerDistancia(ubicacion);
 		//logica para ordenar parada por distancia
-		if (distancia){}
+		if (distancia){
+		}
 	}
 	return listaOrdenada;
 }
+
+
+
+Lista<Parada*>* Barrio::getParadasPorLinea(std::string linea){
+
+    Lista<Parada*>* paradasCoincidencia=new Lista<Parada*>();
+    this->paradas->iniciarCursor();
+
+    while(this->paradas->avanzarCursor()){
+        Parada* paradaActual=this->paradas->obtenerCursor();
+
+        if (paradaActual->tieneLinea(linea)){
+            paradasCoincidencia->agregar(paradaActual);
+        }
+    }
+    return paradasCoincidencia;
+
+}
+
 

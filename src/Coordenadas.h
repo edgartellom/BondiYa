@@ -46,6 +46,10 @@ public:
 	 * post: calcula la distancia a otras coordenadas pasadas por parametro.
 	 */
 	double obtenerDistancia(Coordenadas* coordenadas);
+
+	//Sobrecarga de obtenerDistancia, calcula distancia con Pitágoras
+    //Las coordenadas a comparar son pasadas como array de doubles
+	double obtenerDistancia(double coordenadas[2]);
 };
 
 #endif /* COORDENADAS_H_ */

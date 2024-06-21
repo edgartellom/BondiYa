@@ -35,3 +35,12 @@ double Coordenadas::obtenerDistancia(Coordenadas* coordenadas) {
     return std::sqrt(dx * dx + dy * dy);
 }
 
+
+
+double Coordenadas::obtenerDistancia(double coordenadas[2]){
+    double dx = coordenadas[0]-this->coordenadaX;
+    double dy = coordenadas[1] - this->coordenadaY;
+
+    return std::sqrt(dx*dx+dy*dy);
+
+}

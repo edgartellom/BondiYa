@@ -38,5 +38,27 @@ bool Parada::tieneLinea(LineaDeColectivos* lineaDeColectivos) {
 		}
 	}
 	return false;
+
+
+
+
+
+
 }
+
+bool Parada::tieneLinea(std::string nombreLinea){
+
+    this->lineasDeColectivos->iniciarCursor();
+
+    while(this->lineasDeColectivos->avanzarCursor()) {
+            LineaDeColectivos* lineaRevisada = this->lineasDeColectivos->obtenerCursor();
+            if (lineaRevisada->getNumero()==nombreLinea){
+                return true;
+            }
+    }
+    return false;
+
+}
+
+
 

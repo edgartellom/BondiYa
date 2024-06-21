@@ -47,6 +47,14 @@ public:
 	 */
 	Lista<Parada*>* ordenarParadas(Coordenadas* ubicacion);
 
+
+
+	//Recibe como string un numero de linea y devuelve una lista
+	//con las paradas que incluyen la linea de ese nombre.
+
+	Lista<Parada*>* getParadasPorLinea(std::string linea);
+
 };
+
 
 #endif /* BARRIO_H_ */
