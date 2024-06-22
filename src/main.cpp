@@ -92,13 +92,11 @@ int main() {
 			std::cout << "Ingrese una coordenada Y: ";
 			std::cin.ignore();
 			std::cin >> coords[1];
-            //REVISAR: Funcion no soporta input no numerico en ingreso de coordenadas. Programa loopea indefinidamente.
+        //La funcion asume que el valor ingresado en coords es numerico.
 
 			indice->imprimirParadasOrdenadas(barrio, lineaDeColectivo, coords);
 			std::cout << std::endl;
-			//delete nuevoBarrio;
-			//delete lineaNueva;
-			//delete ubicacionActual;
+
 			break;
 		}
 		case 6: {

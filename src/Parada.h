@@ -48,8 +48,11 @@ public:
 	 */
 	bool tieneLinea(LineaDeColectivos* lineaDeColectivos);
 
-	//Sobrecarga de tieneLinea. Revisa si una linea especifica esta dentro de la lista.
-	//El parametro de referencia es el numero de la linea ingresado como string.
+	/*
+	 *Sobrecarga de tieneLinea. Se utiliza el nombre de la linea como parametro.
+	 *pre: -
+	 *post: validar si una linea de colectivo pasada por parametro esta dentro de la lista.
+	 */
 
 	bool tieneLinea(std::string nombreLinea);
 

@@ -23,3 +23,14 @@ Lista<Parada*>* ordenarParadasPorDistancia(Lista<Parada*>* paradas,double coords
 
     return paradas;
     }
+
+
+void imprimirParadasConDistancia(Lista<Parada*>* paradas, double coords[2]){
+    paradas->iniciarCursor();
+    while(paradas->avanzarCursor()){
+        std::cout<<paradas->obtenerCursor()->getDireccion()<<std::endl<<paradas->obtenerCursor()->getCoordenadas()->obtenerDistancia(coords)<<" metros"<<std::endl;
+        }
+    return;
+
+}
+

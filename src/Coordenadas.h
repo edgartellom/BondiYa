@@ -47,8 +47,11 @@ public:
 	 */
 	double obtenerDistancia(Coordenadas* coordenadas);
 
-	//Sobrecarga de obtenerDistancia, calcula distancia con Pitágoras
-    //Las coordenadas a comparar son pasadas como array de doubles
+	/*
+	 * pre: -
+	 * post: calcula la distancia a otra ubicacion ingresada como doubles.
+     * Tener en cuenta margen de error en largas distancias al no tener en cuenta la curvatura de la tierra.
+	 */
 	double obtenerDistancia(double coordenadas[2]);
 };
 

@@ -37,9 +37,9 @@ Lista<Parada*>* Barrio::ordenarParadas(Coordenadas* ubicacion) {
 		if (distancia){
 		}
 	}
+
 	return listaOrdenada;
 }
-
 
 
 Lista<Parada*>* Barrio::getParadasPorLinea(std::string linea){
@@ -54,6 +54,10 @@ Lista<Parada*>* Barrio::getParadasPorLinea(std::string linea){
             paradasCoincidencia->agregar(paradaActual);
         }
     }
+    if (paradasCoincidencia->estaVacia()){
+        std::cout<<"Esa linea no pasa por ese barrio"<<std::endl;
+        }
+
     return paradasCoincidencia;
 
 }

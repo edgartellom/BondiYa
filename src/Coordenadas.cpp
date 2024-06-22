@@ -38,9 +38,13 @@ double Coordenadas::obtenerDistancia(Coordenadas* coordenadas) {
 
 
 double Coordenadas::obtenerDistancia(double coordenadas[2]){
-    double dx = coordenadas[0]-this->coordenadaX;
-    double dy = coordenadas[1] - this->coordenadaY;
+    const double A_RADIANES=M_PI/180;
+    const double RADIO_TIERRA=6371000;
 
-    return std::sqrt(dx*dx+dy*dy);
+
+    double dx = (coordenadas[0]-this->coordenadaX)*A_RADIANES;
+    double dy = (coordenadas[1] - this->coordenadaY)*A_RADIANES;
+
+    return std::sqrt(dx*dx+dy*dy)*RADIO_TIERRA;
 
 }

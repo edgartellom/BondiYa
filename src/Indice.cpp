@@ -38,7 +38,6 @@ std::string leerCampo(std::stringstream& stream, char delimitador) {
             campo += c;
         }
     }
-
     return campo;
 }
 
@@ -177,9 +176,7 @@ void Indice::imprimirParadasOrdenadas(std::string nombreBarrio, std::string line
     paradasCoincidencia->iniciarCursor();
 
 
-    while(paradasCoincidencia->avanzarCursor()){
-        std::cout<<paradasCoincidencia->obtenerCursor()->getDireccion()<<std::endl<<paradasCoincidencia->obtenerCursor()->getCoordenadas()->obtenerDistancia(coords)<<std::endl;
-    }
+    imprimirParadasConDistancia(paradasCoincidencia,coords);
 
     delete paradasCoincidencia;
 

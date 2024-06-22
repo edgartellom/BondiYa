@@ -49,9 +49,10 @@ public:
 
 
 
-	//Recibe como string un numero de linea y devuelve una lista
-	//con las paradas que incluyen la linea de ese nombre.
-
+	/*
+	 * pre: -
+	 * post: ordena las paradas por distancia de acuerdo a una ubicacion (coordenadas) pasada por parametro y devuelve una nueva lista.
+	 */
 	Lista<Parada*>* getParadasPorLinea(std::string linea);
 
 };

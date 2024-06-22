@@ -46,14 +46,19 @@ public:
 	 */
 	void listarCantParadasPorLineaDeColectivo();
 
-    //Recibe el nombre de barrio y numero de linea como string, y las coordenadas como tupla de doubles.
-    //Funciona como hub para imprimir y una lista con las paradas de cierto barrio y cierta linea
-    //ordenadas en distancia con respecto a una posicion ingresada.
+	/*
+	 * pre: -
+	 * post: Imprime las paradas del barrio y linea especificados ordenados
+	 * segun la distancia con la ubicacion ingresada.
+	 */
 	void imprimirParadasOrdenadas(std::string nombreBarrio, std::string nombreLinea, double coords[2]);
 
 
-    //Se le ingresa el nombre de un barrio e itera sobre la lista de barrios.
-    //Devuelve el objeto barrio que se corresponde con el nombre de barrio ingresado.
+	/*
+	 * pre: -
+	 * post: Devuelve el barrio cuyo nombre coincida con el string ingresado.
+	 * Si no se encuentra un barrio que coincida, imprime que la funcion no lo encontro.
+	 */
 	Barrio* getBarrioPorNombre(std::string nombreBarrio);
 };
 
