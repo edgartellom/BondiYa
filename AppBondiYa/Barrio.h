@@ -39,8 +39,8 @@ public:
 	 * pre: -
 	 * post: ordena las paradas por distancia de acuerdo a una ubicacion (coordenadas) pasada por parametro y devuelve una nueva lista.
 	 */
-	//Lista<Parada*>* ordenarParadas(Coordenadas* ubicacion);
-
+	Lista<Parada*>* getParadasPorLinea(std::string linea);
+	
 };
 
 #endif /* BARRIO_H_ */

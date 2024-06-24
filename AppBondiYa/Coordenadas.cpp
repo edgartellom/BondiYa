@@ -1,4 +1,5 @@
 #include "Coordenadas.h"
+#define _USE_MATH_DEFINES
 #include <cmath>
 
 Coordenadas::Coordenadas() {
@@ -29,4 +30,16 @@ double Coordenadas::obtenerDistancia(Coordenadas* coordenadas) {
     double dx = this->coordenadaX - coordenadas->getCoordenadaX();
     double dy = this->coordenadaY - coordenadas->getCoordenadaY();
     return std::sqrt(dx * dx + dy * dy);
+}
+
+double Coordenadas::obtenerDistancia(double coordenadas[2]){
+    const double A_RADIANES=M_PI/180;
+    const double RADIO_TIERRA=6371000;
+
+
+    double dx = (coordenadas[0]-this->coordenadaX)*A_RADIANES;
+    double dy = (coordenadas[1] - this->coordenadaY)*A_RADIANES;
+
+    return std::sqrt(dx*dx+dy*dy)*RADIO_TIERRA;
+
 }

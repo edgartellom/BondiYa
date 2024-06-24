@@ -24,7 +24,7 @@ int main() {
     try{
 	    indice->guardarInformacion(NOMBRE_ARCHIVO);
         int opcion;
-        std::cout << "¡Bienvenido al sistema BondiYa!" << std::endl;
+        std::cout << "\n" << "----------¡Bienvenido al sistema BondiYa!----------" << std::endl;
 	    std::cout << std::endl;
         do {
             mostrarMenu();
@@ -37,9 +37,9 @@ int main() {
                 }
                 case 2: {
                     double coordX, coordY;
-                    std::cout << "Ingrese la coordenada X: ";
+                    std::cout << "Ingrese la coordenada X(en decimales): ";
                     std::cin >> coordX;
-                    std::cout << "Ingrese la coordenada Y: ";
+                    std::cout << "Ingrese la coordenada Y(en decimales): ";
                     std::cin >> coordY;
                     Coordenadas* ubicacion = new Coordenadas(coordX, coordY);
                     indice->getParadaMasCercana(ubicacion);
@@ -60,20 +60,20 @@ int main() {
                     break;
                 }
                 case 5: {
-                    std::string nombreBarrio, numeroLinea;
-                    std::cout << "Ingrese el nombre del barrio: ";
-                    std::cin.ignore();
-                    std::getline(std::cin, nombreBarrio);
-                    std::cout << "Ingrese el número de línea de colectivo: ";
-                    std::cin >> numeroLinea;
-                    Barrio* barrio = new Barrio(nombreBarrio);
-                    LineaDeColectivos* linea = new LineaDeColectivos(numeroLinea);
-                    Coordenadas* ubicacionActual = new Coordenadas(0, 0); // Colocar la ubicación actual
-                    indice->getParadasOrdenadas(barrio, linea, ubicacionActual);
-                    delete barrio;
-                    delete linea;
-                    delete ubicacionActual;
-                    break;
+                    double coords[2];
+                    std::string barrio, lineaDeColectivo;
+                    std::cout << std::endl;
+			        std::cout << "Ingrese el barrio: ";
+			        std::cin >> barrio;
+			        std::cout << "Ingrese una linea de colectivo: ";
+			        std::cin >> lineaDeColectivo;
+			        std::cout << "Ingrese una coordenada X: ";
+			        std::cin >> coords[0];
+			        std::cout << "Ingrese una coordenada Y: ";
+			        std::cin >> coords[1];
+                    //La funcion asume que el valor ingresado en coords es numerico.
+                    indice->imprimirParadasOrdenadas(barrio, lineaDeColectivo, coords);
+			        std::cout << std::endl;
                 }
                 case 6: {
                     std::cout << "Saliendo del programa..." << std::endl;

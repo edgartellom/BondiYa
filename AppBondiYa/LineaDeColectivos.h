@@ -11,7 +11,7 @@ private:
 public:
 	/*
 	 * pre: El número del colectivo tiene que ser distinto de vacío.
-	 * post: crea la linea de colectivo con su numero pasado por parametro.
+	 * post: crea la linea de colectivo con su numero pasado por parametro, y se iniciliza la cantidad de paradas en 1(cantidad min).
 	 */
 	LineaDeColectivos(std::string numero);
 

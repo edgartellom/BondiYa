@@ -33,10 +33,12 @@ void Indice::guardarInformacion(std::string rutaDeArchivo) {
     std::string linea;
     // Leer la primera línea para descartarla, ya que es el encabezado
     std::getline(archivo, linea);
+    //int numeroDeLinea = 1;
     // Leer todas las líneas de datos
     while (std::getline(archivo, linea)) {
+        //std::cout << "LineaTexto " << numeroDeLinea++ << ": " << linea << std::endl;
         std::stringstream stream(linea);
-        guardar_campos_principales(stream);
+        guardarCamposPrincipales(stream);
     }
     archivo.close();
 }
@@ -50,23 +52,26 @@ std::string Indice::leerCampo(std::stringstream& stream, char delimitador) {
     }
     std::string campo;
     char siguiente = stream.peek();
-    // Verificar si el siguiente caracter es una comilla
     if (siguiente == '"') {
-        //stream.get(); // Consumir la comilla inicial
+        stream.get(); // Leer y descartar la comilla inicial
+        campo += '"'; // Incluir la comilla inicial en el campo
         while (stream.get(siguiente) && siguiente != '"') {
             campo += siguiente;
         }
-        campo += siguiente;
+        if (siguiente == '"') {
+            campo += '"'; // Incluir la comilla final en el campo
+        }
         stream.get();
     } else if (siguiente == delimitador) {
         stream.get(); 
     } else {
         std::getline(stream, campo, delimitador); // Leer hasta el delimitador
     }
+    //std::cout<<"Campo: "<<campo<<std::endl;
     return campo;
 }
 
-void Indice::guardar_campos_principales(std::stringstream& stream) {
+void Indice::guardarCamposPrincipales(std::stringstream& stream) {
     if (!stream.good()) {
         throw "Error: el stream no está en un estado válido.";
     }
@@ -83,13 +88,19 @@ void Indice::guardar_campos_principales(std::stringstream& stream) {
     barrio = leerCampo(stream, delimitador);
     // Crear coordenada
     Coordenadas* coordenadas = crearCoordenadas(x, y);
+    if (barrio.empty()) {
+        barrio = "N.N(SinBarrio)";//agrega un nombre por defecto
     // Buscar o crear el barrio
+    }
     Barrio* barrioEncontrado = obtenerBarrio(barrio);
         if (barrioEncontrado == NULL) {
             barrioEncontrado = new Barrio(barrio);
             barrios->agregar(barrioEncontrado);
         }
     // Crear la parada
+    if (direccion.empty()) {
+        direccion = calle + "," + altPlano;
+    }
     Parada* parada = new Parada(direccion, coordenadas);
     // Leer las líneas de colectivo
     leerLineasDeColectivos(stream, parada);
@@ -109,11 +120,14 @@ void Indice::leerLineasDeColectivos(std::stringstream& stream, Parada* parada) {
         std::string lineaCampo;
         std::getline(stream, lineaCampo, ',');
         if (!lineaCampo.empty() && lineaCampo != ",") {
-            LineaDeColectivos* linea = new LineaDeColectivos(lineaCampo);
-            if (agregarSiNoExiste(linea)) {
-                linea->incrementarCantidadDeParadas(); // Incrementar el contador de paradas
+            LineaDeColectivos* lineaExistente = encontrarLinea(lineaCampo);
+            if (lineaExistente == NULL) {
+                LineaDeColectivos* linea = new LineaDeColectivos(lineaCampo);
+                this->lineasDeColectivos->agregar(linea);
+            } else {
+                parada->agregarLineaDeColectivos(lineaExistente);
+                lineaExistente->incrementarCantidadDeParadas();
             }
-            parada->agregarLineaDeColectivos(linea);
             std::string sentidoCampo;
             std::getline(stream, sentidoCampo, ',');
         } else {
@@ -122,20 +136,18 @@ void Indice::leerLineasDeColectivos(std::stringstream& stream, Parada* parada) {
     }
 }
 
-bool Indice::agregarSiNoExiste(LineaDeColectivos* linea) {
-    if(linea == NULL){
-        throw "linea no puede ser NULL";
+LineaDeColectivos* Indice::encontrarLinea(const std::string& linea) {
+    if (linea.empty()){
+        throw "la linea no puede ser vacío";
     }
     this->lineasDeColectivos->iniciarCursor();
     while (this->lineasDeColectivos->avanzarCursor()) {
         LineaDeColectivos* lineaExistente = this->lineasDeColectivos->obtenerCursor();
-        if (lineaExistente->getNumero() == linea->getNumero()) {
-            delete linea; // Liberar la memoria de la línea que no se va a usar
-            return false;
+        if (lineaExistente->getNumero() == linea) {
+            return lineaExistente;
         }
     }
-    this->lineasDeColectivos->agregar(linea);
-    return true;
+    return NULL;
 }
 
 Lista<LineaDeColectivos*>* Indice::getLineasDeColectivos() {
@@ -215,7 +227,7 @@ void Indice::getParadaMasCercana(Coordenadas* ubicacion) {
         }
     }
     if (paradaMasCercana) {
-        std::cout << "La parada más cercana es: " << paradaMasCercana->getDireccion()
+        std::cout <<"\n"<<"La parada más cercana es: " << paradaMasCercana->getDireccion()
                 << " en " << menorDistancia << " unidades de distancia." << std::endl;
     } else {
         std::cout << "No se encontraron paradas cercanas." << std::endl;
@@ -231,7 +243,7 @@ void Indice::mostrarParadas(Barrio* barrio, LineaDeColectivos* lineaDeColectivos
     while (paradas->avanzarCursor()) {
         Parada* parada = paradas->obtenerCursor();
         if (parada->tieneLinea(lineaDeColectivos)) {
-            std::cout << "Parada: " << parada->getDireccion() << std::endl;
+            std::cout << "Parada" << ":" <<parada->getDireccion() << std::endl;
         }
     }
 }
@@ -255,9 +267,34 @@ void Indice::listarCantParadasPorLineaDeColectivo() {
         std::cout << "Línea " << linea->getNumero() << ": " << linea->getCantidadDeParadas() << " paradas." << std::endl;
     }
 }
-void Indice::getParadasOrdenadas(Barrio* barrio, LineaDeColectivos* lineaDeColectivos, Coordenadas* ubicacionActual) {
-    if(barrio == NULL || lineaDeColectivos == NULL || ubicacionActual == NULL){
-        throw "barrio, línea de colectivos y ubicación actual tienen que ser distintos de NULL.";
+void Indice::imprimirParadasOrdenadas(std::string nombreBarrio, std::string linea, double coords[2]) {
+    Barrio * barrioOrdenar=getBarrioPorNombre(nombreBarrio);
+    Lista<Parada*>* paradasCoincidencia=barrioOrdenar->getParadasPorLinea(linea);
+    paradasCoincidencia->iniciarCursor();
+    paradasCoincidencia=ordenarParadasPorDistancia(paradasCoincidencia,coords);
+    paradasCoincidencia->iniciarCursor();
+    imprimirParadasConDistancia(paradasCoincidencia,coords);
+    delete paradasCoincidencia;
+}
+
+Barrio* Indice::getBarrioPorNombre(std::string nombreBarrio){
+
+    try{
+        bool siguiente=true;
+        this->barrios->iniciarCursor();
+        Barrio * barrioActual;
+        while(this->barrios->avanzarCursor()){
+                barrioActual=this->barrios->obtenerCursor();
+                if (nombreBarrio==barrioActual->getNombre()){
+                    return barrioActual;
+        }
     }
-    std::cout<<"Falta"<< std::endl;
-};
+
+throw 125;
+    }
+    catch(int){
+    std::cout<<"Barrio no encontrado"<<std::endl;
+    return NULL;
+    }
+}
+//potencialmente cambiar el sistema catch para que se siga ejecutando el menu luego de no encontrar barrio

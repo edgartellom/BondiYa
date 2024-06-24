@@ -12,7 +12,7 @@ public:
 	Lista<LineaDeColectivos*>* lineasDeColectivos;
 
 	/*
-	 * pre: -
+	 * pre: dirección no puede ser cadena vacía y coordenadas no puede ser NULL.
 	 * post: crea una parada con una direccion y coordenadas pasadas por parametro.
 	 */
 	Parada(std::string direccion, Coordenadas* coordenadas);
@@ -31,16 +31,24 @@ public:
 	Coordenadas* getCoordenadas();
 
 	/*
-	 * pre: -
+	 * pre: linea de colectivos tiene que ser distinto de NULL.
 	 * post: guarda la linea de colectivos pasada por parametro.
 	 */
 	void agregarLineaDeColectivos(LineaDeColectivos* lineaDeColectivos);
 
 	/*
-	 * pre: -
+	 * pre: linea de colectivos tiene que ser distinto de NULL.
 	 * post: validar si una linea de colectivo pasada por parametro esta dentro de la lista.
 	 */
 	bool tieneLinea(LineaDeColectivos* lineaDeColectivos);
+
+	/*
+	 *Sobrecarga de tieneLinea. Se utiliza el nombre de la linea como parametro.
+	 *pre: -
+	 *post: validar si una linea de colectivo pasada por parametro esta dentro de la lista.
+	 */
+
+	bool tieneLinea(std::string nombreLinea);
 
 };
 

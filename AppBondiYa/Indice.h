@@ -1,4 +1,5 @@
 #include "Barrio.h"
+#include "FuncionesAuxiliares.h"
 #ifndef INDICE_H_
 #define INDICE_H_
 
@@ -11,13 +12,13 @@ private:
      * pre: stream debe estar en un estado válido.
      * post: guarda los campos principales de una línea del archivo CSV en el índice.
      */
-	void guardar_campos_principales(std::stringstream& stream);
+	void guardarCamposPrincipales(std::stringstream& stream);
 
 	/*
-     * pre: linea no puede ser NULL.
+     * pre: linea no puede ser vacio.
      * post: agrega la línea de colectivos al índice si no existe.
      */
-	bool agregarSiNoExiste(LineaDeColectivos* linea);
+	LineaDeColectivos* encontrarLinea(const std::string& lineaColectivo);
 
 	/*
      * pre: stream debe estar en un estado válido. parada no puede ser NULL.
@@ -100,6 +101,21 @@ public:
 	 * post: obtiene las paradas de un barrio de una linea de colectivo en orden de acuerdo a la distancia de una ubicacion pasados por parametro.
 	 */
 	void getParadasOrdenadas(Barrio* barrio, LineaDeColectivos* lineaDeColectivos, Coordenadas* ubicacionActual);
+
+	/*
+	 * pre: -
+	 * post: Imprime las paradas del barrio y linea especificados ordenados
+	 * segun la distancia con la ubicacion ingresada.
+	 */
+	void imprimirParadasOrdenadas(std::string nombreBarrio, std::string nombreLinea, double coords[2]);
+
+
+	/*
+	 * pre: -
+	 * post: Devuelve el barrio cuyo nombre coincida con el string ingresado.
+	 * Si no se encuentra un barrio que coincida, imprime que la funcion no lo encontro.
+	 */
+	Barrio* getBarrioPorNombre(std::string nombreBarrio);
 };
 
 #endif /* INDICE_H_ */

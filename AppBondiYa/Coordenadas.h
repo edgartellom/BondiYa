@@ -39,6 +39,13 @@ public:
      * post: calcula la distancia a otras coordenadas pasadas por parámetro.
      */
 	double obtenerDistancia(Coordenadas* coordenadas);
+
+	/*
+	 * pre: -
+	 * post: calcula la distancia a otra ubicacion ingresada como doubles.
+     * Tener en cuenta margen de error en largas distancias al no tener en cuenta la curvatura de la tierra.
+	 */
+	double obtenerDistancia(double coordenadas[2]);
 };
 
 #endif /* COORDENADAS_H_ */

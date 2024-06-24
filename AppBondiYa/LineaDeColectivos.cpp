@@ -5,7 +5,7 @@ LineaDeColectivos::LineaDeColectivos(std::string numero) {
         throw "El número del colectivo no puede ser vacío.";
     }
 	this->numero = numero;
-	this->cantidadDeParadas = 0;
+	this->cantidadDeParadas = 1;
 }
 
 LineaDeColectivos::~LineaDeColectivos() {
